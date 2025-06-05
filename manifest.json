@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "AudioFlash",
+    "version": "1.0.0",
+    "description": "Text-to-speech extension using Murf AI streaming API to read selected text aloud",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://api.murf.ai/*",
+        "https://*/*"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "AudioFlash - Text to Speech"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

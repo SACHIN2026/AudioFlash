@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioFlash</title>
+    <style>
+        body {
+            width: 320px;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .text-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            min-height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .text-preview p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .voice-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+        }
+
+        select option {
+            background: #4a5568;
+            color: white;
+        }
+
+        .play-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .play-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .play-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        .error {
+            background: rgba(255, 87, 87, 0.2);
+            border: 1px solid rgba(255, 87, 87, 0.3);
+            color: #ffb3b3;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .api-key-section {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .api-key-section h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .api-key-section input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 12px;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+        }
+
+        .api-key-section input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .api-key-section button {
+            background: rgba(76, 175, 80, 0.8);
+            border: 1px solid rgba(76, 175, 80, 1);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .api-key-section button:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>🔊 AudioFlash</h1>
+    </div>
+
+    <!-- API Key Setup Section (initially hidden) -->
+    <div class="api-key-section" id="apiKeySection" style="display: none;">
+        <h3>🔑 API Key Required</h3>
+        <input type="password" id="apiKeyInput" placeholder="Enter your Murf API key (e.g., murf_live_xxx...)"
+            autocomplete="off" />
+        <button id="saveApiKeyButton">Save API Key</button>
+    </div>
+
+    <div class="text-preview" id="textPreview">
+        <p id="selectedText">Select text on the webpage and click Play to hear it spoken aloud.</p>
+    </div>
+
+    <div class="controls">
+        <div class="voice-selector">
+            <label for="voiceSelect">Voice:</label>
+            <select id="voiceSelect">
+                <option value="en-US-sara">Sara (English US)</option>
+                <option value="en-US-davis">Davis (English US)</option>
+                <option value="en-GB-emma">Emma (English UK)</option>
+                <option value="en-AU-olivia">Olivia (English AU)</option>
+                <option value="es-ES-antonio">Antonio (Spanish)</option>
+                <option value="fr-FR-brigitte">Brigitte (French)</option>
+                <option value="de-DE-klaus">Klaus (German)</option>
+            </select>
+        </div>
+
+        <button class="play-button" id="playButton">
+            <span id="playIcon">▶️</span>
+            <span id="playText">Play</span>
+        </button>
+    </div>
+
+    <div class="status" id="status"></div>
+    <div class="error" id="error" style="display: none;"></div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
