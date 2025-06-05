@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Compiled files
+*.pyc
+*.pyo
+*.exe
+*.dll
+*.so
+*.dylib
+
+# IDE files
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Chrome Extension build artifacts
+*.crx
+*.pem
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Backup files
+*.bak
+*.old
+
+# Generated icons
+icons/
