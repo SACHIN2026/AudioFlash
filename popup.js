@@ -2,7 +2,7 @@
 class AudioFlash {
     constructor() {
         this.API_BASE_URL = 'https://api.murf.ai/v1';
-        this.API_KEY = 'ap2_759529cb-b62d-4935-a00c-338fbac109e0'; // Embedded directly
+        this.API_KEY = process.env.API_KEY; // Embedded directly
 
         this.selectedText = '';
         this.audioContext = null;
